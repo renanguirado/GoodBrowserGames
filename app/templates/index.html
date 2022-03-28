@@ -16,19 +16,28 @@
             <table class="table">
                 <thead class="table-dark">
                   <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Categoria</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {% for dbs in db %}
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <th> {{dbs.id}} </th>
+                    <td> {{dbs.nome}} </td>
+                    <td> {{dbs.categoria}} </td>
+                    <td> {{dbs.descrição}} </td>
+                    <td>
+                      <a href="/view/{{dbs.id}}/" class="btn btn-dark">Visualizar</a>
+                      <a href="/edit/{{dbs.id}}/" class="btn btn-primary">Editar</a>
+                      <a href="/delete/{{dbs.id}}/" class="btn btn-danger">Remover</a>
+                    </td>
                   </tr>
+                  {% endfor %}
+
                 </tbody>
               </table>
         </div>
@@ -37,9 +46,13 @@
             <a href="/form_game" class="btn btn-success"> Adicionar Game</a>
         </div>
 
-        
+        {%load static%}
+
+        <script src="{% static 'javascript.js'%}"></script>
 
     </body>
+
+
 
 
 
