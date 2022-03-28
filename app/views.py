@@ -1,9 +1,16 @@
+from re import search
 from django.shortcuts import render, redirect
 from app.game_form import GamesForm
 from app.models import Games
+from django.core.paginator import Paginator
 
 def index(request):
     data = {}
+    search = request.GET.get('search')
+    if search:
+        data['db'] = Games.objects.filter(nome__icontains=search)
+    else:
+        data
     data['db'] = Games.objects.all()
     return render(request, 'index.html', data)
 
@@ -47,3 +54,5 @@ def delete(request,pk):
     db = Games.objects.get(pk=pk)
     db.delete()
     return redirect('/')
+
+
