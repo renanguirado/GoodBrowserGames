@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from app.game_form import GamesForm
 from app.models import Games
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     data = {}
@@ -12,7 +14,7 @@ def index(request):
     else:
         data
     data['db'] = Games.objects.all()
-    return render(request, 'index.html', data)
+    return render(request, 'cadastro.html', data)
 
 def login(request):
     return render(request, 'login.html')
