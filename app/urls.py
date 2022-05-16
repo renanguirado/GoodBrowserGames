@@ -1,10 +1,9 @@
 from django.urls import path
 
-from.views import index,login,games,form_game,create,view,edit,update,delete
+from.views import index,games,form_game,create,view,edit,update,delete
 
 urlpatterns = [
     path('', index, name='index'),
-    path('login/', login, name='login'),
     path('games/', games, name='games'),
     path('form_game/', form_game, name='formulario'),
     path('create/', create, name='create'),

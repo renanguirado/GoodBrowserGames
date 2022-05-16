@@ -14,10 +14,8 @@ def index(request):
     else:
         data
     data['db'] = Games.objects.all()
-    return render(request, 'cadastro.html', data)
+    return render(request, 'login.html', data)
 
-def login(request):
-    return render(request, 'login.html')
 
 def games(request):
     return render(request, 'games.html')
