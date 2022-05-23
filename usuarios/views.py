@@ -38,6 +38,6 @@ def login(request):
         
         if user:
             login_django(request, user)
-            return HttpResponse('Usuário Logado!')
+            return render(request, 'index.html')
         else:
             return HttpResponse('Usuário ou senha inválido')

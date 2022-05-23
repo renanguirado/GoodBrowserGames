@@ -29,7 +29,7 @@ def create(request):
     form_game = GamesForm(request.POST or None)
     if form_game.is_valid():
         form_game.save()
-        return redirect('/')
+        return render(request, 'index.html')
 
 def view(request, pk):
     data = {}
@@ -48,11 +48,23 @@ def update(request, pk):
     form_game = GamesForm(request.POST or None, instance=data['db'])
     if form_game.is_valid():
         form_game.save()
-        return redirect('/')
+        return render(request, 'index.html')
 
 def delete(request,pk):
     db = Games.objects.get(pk=pk)
     db.delete()
-    return redirect('/')
+    return render(request, 'index.html')
+
+def avaliar(request, pk):
+    data = {}
+    data['db'] = Games.objects.get(pk=pk)
+    data['form_avalia'] = GamesForm(instance=data['db'])
+    return render(request, 'form_avalia.html', data)
+
+def edit(request, pk):
+    data = {}
+    data['db'] = Games.objects.get(pk=pk)
+    data['form_game'] = GamesForm(instance=data['db'])
+    return render(request, 'form_game.html', data)
 
 
