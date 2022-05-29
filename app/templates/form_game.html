@@ -12,7 +12,9 @@
 
         </div>
 
+        
         <div class="col-8 m-auto pt-2 pb-2 text-center">
+                <div class="card card-body d-flex flex-column">
             <form name="form_game" id ="form_game" action="{%  if db %}/update/{{db.id}}/{%else%}/create/{% endif %}" method="post">
                 {% csrf_token %}
 
@@ -22,7 +24,7 @@
         
             </form>
  
-            
+            </div>
         </div>
 
         <div class="col-8 m-auto pt-2 pb-2 text-center"> 

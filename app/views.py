@@ -22,6 +22,16 @@ def games(request):
     data['db'] = Games.objects.all()
     return render(request, 'index.html', data)
 
+def gamesadmin(request):
+    data = {}
+    search = request.GET.get('search')
+    if search:
+        data['db'] = Games.objects.filter(nome__icontains=search)
+    else:
+        data
+    data['db'] = Games.objects.all()
+    return render(request, 'admin.html', data)
+
 def form_game(request):
     data = {}
     data['form_game'] = GamesForm()
@@ -32,7 +42,7 @@ def create(request):
     print(form_game)
     if form_game.is_valid():
         form_game.save()
-        return redirect('/games')
+        return redirect('/gamesadmin    ')
 
 def view(request, pk):
     data = {}
@@ -51,12 +61,12 @@ def update(request, pk):
     form_game = GamesForm(request.POST or None, instance=data['db'])
     if form_game.is_valid():
         form_game.save()
-        return redirect('/games')
+        return redirect('/gamesadmin')
 
 def delete(request,pk):
     db = Games.objects.get(pk=pk)
     db.delete()
-    return redirect('/games')
+    return redirect('/gamesadmin')
 
 def avaliar_form(request, pk):
     data = {}

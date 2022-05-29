@@ -31,14 +31,18 @@
                     <td> {{dbs.categoria}} </td>
                     <td> {{dbs.descrição}} </td>
                     <td>
-                      <a href="/view/{{dbs.id}}/" class="btn btn-dark">Visualizar</a>
-                      <a href="/avaliar/{{dbs.id}}/" class="btn btn-success">Avaliar</a>
+                      <a href="/edit/{{dbs.id}}/" class="btn btn-primary">Editar</a>
+                      <a href="/delete/{{dbs.id}}/" class="btn btn-danger btnDel">Remover</a>
                     </td>
                   </tr>
                   {% endfor %}
 
                 </tbody>
               </table>
+        </div>
+
+        <div class="col-8 m-auto pt-2 pb-2 text-center"> 
+            <a href="/form_game" class="btn btn-success"> Adicionar Game</a>
         </div>
 
         {%load static%}
