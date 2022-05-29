@@ -36,8 +36,12 @@ def login(request):
 
         user= authenticate (username=username, password=senha)
         
-        if user:
+        if user.is_superuser:
             login_django(request, user)
+            return redirect('/gamesadmin')
+        elif user:
+            login_django(request,user)
             return redirect('/games')
         else:
             return HttpResponse('Usuário ou senha inválido')
+        
