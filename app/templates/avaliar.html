@@ -29,7 +29,7 @@
                     <div class="mb-3 col-2">
                         <input type="number" min="0" max="5" class="form-control" id="nota" placeholder="Nota (1 a 5)" name="nota">
                     </div>
-                    <input type="submit" class="btn btn-success" value="Avaliar">
+                    <input type="submit" class="btn btn-success btnSucess" value="Avaliar">
             
                 </form>
  
@@ -45,14 +45,17 @@
             <div class="col-10 m-auto pt-2 pb-2"> 
                 <div class="card" >
                     <p>Autor: {{avs.autor}}</p>
-                    <p>Comentário:</p>
-                    <p>{{avs.comentario}}</p>
+                    <p>Comentário: {{avs.comentario}}</p>
                     <p>Nota: {{avs.nota}}\5</p>
+                    <a href="/deleteaval/{{avs.id}}/" class="btn btn-danger btnDel">Remover</a>
                 </div>
             </div>
             {% endfor %}
         </tbody>
 
+        {%load static%}
+
+        <script src="{% static 'javascript.js'%}"></script>
     </body>
 
 

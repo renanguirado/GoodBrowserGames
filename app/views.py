@@ -72,3 +72,10 @@ def avaliar(request, pk):
     if form_aval.is_valid():
         form_aval.save()
         return redirect(rota)
+
+def deleteaval(request,pk):
+    db = Avaliacoes.objects.get(pk=pk)
+    db.delete()
+    pk_str = str(db.game_id)
+    rota = "/avaliar/" + pk_str
+    return redirect(rota)
