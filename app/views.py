@@ -42,7 +42,7 @@ def create(request):
     print(form_game)
     if form_game.is_valid():
         form_game.save()
-        return redirect('/gamesadmin    ')
+        return redirect('/gamesadmin')
 
 def view(request, pk):
     data = {}
