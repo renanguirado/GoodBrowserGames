@@ -7,6 +7,10 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
+    return render(request, 'login.html')
+
+
+def games(request):
     data = {}
     search = request.GET.get('search')
     if search:
@@ -14,11 +18,7 @@ def index(request):
     else:
         data
     data['db'] = Games.objects.all()
-    return render(request, 'login.html', data)
-
-
-def games(request):
-    return render(request, 'games.html')
+    return render(request, 'index.html', data)
 
 def form_game(request):
     data = {}
@@ -29,7 +29,7 @@ def create(request):
     form_game = GamesForm(request.POST or None)
     if form_game.is_valid():
         form_game.save()
-        return redirect('/')
+        return redirect('/games')
 
 def view(request, pk):
     data = {}
@@ -48,11 +48,23 @@ def update(request, pk):
     form_game = GamesForm(request.POST or None, instance=data['db'])
     if form_game.is_valid():
         form_game.save()
-        return redirect('/')
+        return redirect('/games')
 
 def delete(request,pk):
     db = Games.objects.get(pk=pk)
     db.delete()
-    return redirect('/')
+    return redirect('/games')
 
+def avaliar_form(request, pk):
+    data = {}
+    data['db'] = Games.objects.get(pk=pk)
+    data['form_game'] = GamesForm(instance=data['db'])
+    return render(request, 'avaliar.html', data)
 
+def avaliar(request):
+    username = request.POST.get('username')
+    email = request.POST.get('email')
+    senha = request.POST.get('senha')
+    if form_game.is_valid():
+        form_game.save()
+        return redirect('/games')

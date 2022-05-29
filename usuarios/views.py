@@ -1,6 +1,6 @@
 from xml.dom import UserDataHandler
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
@@ -38,6 +38,6 @@ def login(request):
         
         if user:
             login_django(request, user)
-            return HttpResponse('Usuário Logado!')
+            return redirect('/games')
         else:
             return HttpResponse('Usuário ou senha inválido')
