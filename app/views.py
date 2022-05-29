@@ -22,6 +22,17 @@ def games(request):
     data['db'] = Games.objects.all()
     return render(request, 'index.html', data)
 
+def buscagame(request):
+    data = {}
+    if request.method == "POST":
+        game_buscado = request.POST['search']
+        print(game_buscado)
+        data['db'] = Games.objects.filter(nome__icontains=game_buscado)
+        return render(request, 'index.html',data)
+    else:
+        return render(request, 'index.html')
+
+
 def gamesadmin(request):
     data = {}
     search = request.GET.get('search')
