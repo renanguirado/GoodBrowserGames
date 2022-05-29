@@ -1,7 +1,9 @@
 from re import search
+import string
 from django.shortcuts import render, redirect
-from app.game_form import GamesForm
-from app.models import Games
+from django.http import HttpResponse
+from app.game_form import GamesForm, AvalForm
+from app.models import Games, Avaliacoes
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
@@ -27,6 +29,7 @@ def form_game(request):
 
 def create(request):
     form_game = GamesForm(request.POST or None)
+    print(form_game)
     if form_game.is_valid():
         form_game.save()
         return redirect('/games')
@@ -58,13 +61,14 @@ def delete(request,pk):
 def avaliar_form(request, pk):
     data = {}
     data['db'] = Games.objects.get(pk=pk)
-    data['form_game'] = GamesForm(instance=data['db'])
+    data['av'] = Avaliacoes.objects.filter(game_id=pk)
     return render(request, 'avaliar.html', data)
 
-def avaliar(request):
-    username = request.POST.get('username')
-    email = request.POST.get('email')
-    senha = request.POST.get('senha')
-    if form_game.is_valid():
-        form_game.save()
-        return redirect('/games')
+def avaliar(request, pk):
+    form_aval = AvalForm(request.POST or None)
+    pk_str = str(pk)
+    rota = "/avaliar/" + pk_str
+    print(rota)
+    if form_aval.is_valid():
+        form_aval.save()
+        return redirect(rota)

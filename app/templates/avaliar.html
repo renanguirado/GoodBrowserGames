@@ -8,36 +8,50 @@
 
     <body>
         <div class="col-8 m-auto pt-2 pb-2 text-center"> 
-            <h1> Cadastro de Browser Game avaliar</h1>
-
+            <h2> Avaliar Browser game {{db.nome}}</h2   >
         </div>
 
         <div class="col-8 m-auto pt-2 pb-2 text-center">
-            <form name="form_game" id ="form_game" action="{%  if db %}/update/{{db.id}}/{%else%}/create/{% endif %}" method="post">
-                {% csrf_token %}
-
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="autor" aria-describedby="autor"
-                      placeholder="Autor" name="autor">
-                </div>
-                <div class="mb-3">
-                    <textarea type="text" class="form-control" id="comentario" placeholder="Comentário" name="comentario" rows="3"></textarea>
-                </div>
-                <div class="mb-3">
-                      <input type="number" min="0" max="5" class="form-control" id="nota" placeholder="Nota (1 a 5)" name="nota">
-                </div>
-                <input type="submit" class="btn btn-success" value="Salvar">
-        
-            </form>
- 
+            <div class="card" >
+                <form name="avaliar_form" id ="avaliar_form" action="/createaval/{{db.id}}/" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 col-1">
+                        <input type="hidden" class="form-control" id="game_id" aria-describedby="game_id"
+                        placeholder="game_id" name="game_id" value="{{db.id}}">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="autor" aria-describedby="autor"
+                        placeholder="Autor" name="autor">
+                    </div>
+                    <div class="mb-3">
+                        <textarea type="text" class="form-control" id="comentario" placeholder="Comentário" name="comentario" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3 col-2">
+                        <input type="number" min="0" max="5" class="form-control" id="nota" placeholder="Nota (1 a 5)" name="nota">
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Avaliar">
             
+                </form>
+ 
+            </div>
         </div>
 
         <div class="col-8 m-auto pt-2 pb-2 text-center"> 
-            <a href="/" class="btn btn-info"> Voltar</a>
+            <a href="/games" class="btn btn-info"> Voltar</a>
         </div>
 
-        
+        <tbody>
+            {% for avs in av %}
+            <div class="col-10 m-auto pt-2 pb-2"> 
+                <div class="card" >
+                    <p>Autor: {{avs.autor}}</p>
+                    <p>Comentário:</p>
+                    <p>{{avs.comentario}}</p>
+                    <p>Nota: {{avs.nota}}\5</p>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
 
     </body>
 
