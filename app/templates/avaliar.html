@@ -12,7 +12,7 @@
         </div>
 
         <div class="col-8 m-auto pt-2 pb-2 text-center">
-            <div class="card" >
+            <div class="card card-body d-flex flex-column" >
                 <form name="avaliar_form" id ="avaliar_form" action="/createaval/{{db.id}}/" method="post">
                     {% csrf_token %}
                     <div class="mb-3 col-1">
@@ -40,24 +40,26 @@
             <a href="/games" class="btn btn-info"> Voltar</a>
         </div>
 
+        <br>
+        <div class="col-8 m-auto pt-2 pb-2 text-center">
+            <h2> Avaliações de {{db.nome}}</h2>
+        </div>
+    
         <tbody>
             {% for avs in av %}
-            <div class="col-10 m-auto pt-2 pb-2"> 
-                <div class="card" >
-                    <p>Autor: {{avs.autor}}</p>
-                    <p>Comentário: {{avs.comentario}}</p>
-                    <p>Nota: {{avs.nota}}\5</p>
-                    <a href="/deleteaval/{{avs.id}}/" class="btn btn-danger btnDel">Remover</a>
+            <div class="col-8 m-auto pt-2 pb-2">
+                <div class="card">
+                    <p><b>Autor:</b> {{avs.autor}}</p>
+                    <p><b>Comentário:</b> {{avs.comentario}}</p>
+                    <p><b>Nota:</b> {{avs.nota}}\5</p>
+                    <a href="/deleteaval/{{avs.id}}/" class="btn btn-danger btnDel" >Remover</a>
                 </div>
             </div>
             {% endfor %}
         </tbody>
-
         {%load static%}
 
         <script src="{% static 'javascript.js'%}"></script>
     </body>
-
-
 
 </html>
