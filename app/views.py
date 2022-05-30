@@ -9,10 +9,13 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    return render(request, 'login.html')
-
+    return render(request, 'registration/login.html')
 
 def games(request):
+    user=request.user
+    #import pdb; pdb.set_trace()
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     data = {}
     search = request.GET.get('search')
     if search:
@@ -27,8 +30,12 @@ def buscagame(request):
     if request.method == "POST":
         game_buscado = request.POST['search']
         print(game_buscado)
-        data['db'] = Games.objects.filter(nome__icontains=game_buscado)
-        return render(request, 'index.html',data)
+        if Games.objects.filter(nome__icontains=game_buscado):
+            data['db'] = Games.objects.filter(nome__icontains=game_buscado)
+            return render(request, 'index.html',data)
+        elif Games.objects.filter(categoria__icontains=game_buscado):
+            data['db'] = Games.objects.filter(categoria__icontains=game_buscado)
+            return render(request, 'index.html',data)
     else:
         return render(request, 'index.html')
 
@@ -37,13 +44,20 @@ def buscagameAdmin(request):
     if request.method == "POST":
         game_buscado = request.POST['search']
         print(game_buscado)
-        data['db'] = Games.objects.filter(nome__icontains=game_buscado)
-        return render(request, 'admin.html',data)
+        if Games.objects.filter(nome__icontains=game_buscado):
+            data['db'] = Games.objects.filter(nome__icontains=game_buscado)
+            return render(request, 'admin.html',data)
+        elif Games.objects.filter(categoria__icontains=game_buscado):
+            data['db'] = Games.objects.filter(categoria__icontains=game_buscado)
+            return render(request, 'admin.html',data)
     else:
         return render(request, 'admin.html')
 
 
 def gamesadmin(request):
+    user=request.user
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     data = {}
     search = request.GET.get('search')
     if search:
@@ -54,11 +68,17 @@ def gamesadmin(request):
     return render(request, 'admin.html', data)
 
 def form_game(request):
+    user=request.user
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     data = {}
     data['form_game'] = GamesForm()
     return render(request, 'form_game.html', data)
 
 def create(request):
+    user=request.user
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     form_game = GamesForm(request.POST or None)
     print(form_game)
     if form_game.is_valid():
@@ -66,17 +86,26 @@ def create(request):
         return redirect('/gamesadmin')
 
 def view(request, pk):
+    user=request.user
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     data = {}
     data['db'] = Games.objects.get(pk=pk)
     return render(request, 'view.html',data)
 
 def edit(request, pk):
+    user=request.user
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     data = {}
     data['db'] = Games.objects.get(pk=pk)
     data['form_game'] = GamesForm(instance=data['db'])
     return render(request, 'form_game.html', data)
 
 def update(request, pk):
+    user=request.user
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     data = {}
     data['db'] = Games.objects.get(pk=pk)
     form_game = GamesForm(request.POST or None, instance=data['db'])
@@ -85,17 +114,26 @@ def update(request, pk):
         return redirect('/gamesadmin')
 
 def delete(request,pk):
+    user=request.user
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     db = Games.objects.get(pk=pk)
     db.delete()
     return redirect('/gamesadmin')
 
 def avaliar_form(request, pk):
+    user=request.user
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     data = {}
     data['db'] = Games.objects.get(pk=pk)
     data['av'] = Avaliacoes.objects.filter(game_id=pk)
     return render(request, 'avaliar.html', data)
 
 def avaliar(request, pk):
+    user=request.user
+    if not user.is_authenticated:
+        return redirect ('/auth/auth/login/')
     form_aval = AvalForm(request.POST or None)
     pk_str = str(pk)
     rota = "/avaliar/" + pk_str

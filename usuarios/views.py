@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 
 def cadastro(request):
     if request.method =='GET':
@@ -23,13 +25,15 @@ def cadastro(request):
         user.save()
 
 
-        return HttpResponse('Usuário cadastrado com sucesso!')
-
+        return redirect('/auth/auth/login/sucesso=1')
     
 
-def login(request):
+def login(request,sucesso=False):
     if request.method == 'GET':
-        return render(request, '/auth/login.html')
+        contexto = {
+            'sucesso':sucesso
+        }
+        return render(request, 'registration/login.html', contexto)
     else:
         username = request.POST.get('username')
         senha = request.POST.get('senha')
