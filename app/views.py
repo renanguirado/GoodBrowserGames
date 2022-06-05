@@ -146,28 +146,41 @@ def avaliar(request, pk):
 
 def marcaUtil(request,pk):
     user=request.user
+
     if not user.is_authenticated:
         return redirect ('/auth/auth/login/')
+
     db = Avaliacoes.objects.get(pk=pk)
-    b2 = Like.objects.filter(avaliacoes=db)
-    utilidade = 0
+    b2 = Like.objects.filter(user=user,avaliacoes=db)
+
     if b2:
-        b3 = Like.objects.get(avaliacoes=db)
+        b3 = Like.objects.get(user=user,avaliacoes=db)
         if b3.estado == 'Like':
-            Like.objects.filter(avaliacoes=db).update(estado='Dislike')
-            utilidade = 1 + int(db.util)
+            Like.objects.filter(user=user,avaliacoes=db).update(estado='Dislike')
+            print(db.util,"like")
+            soma = int(db.util)
+            utilidade = 1 + soma
+            print(utilidade)
+            Avaliacoes.objects.filter(pk=pk).update(util=utilidade)
             db.liked.add(user)
         else:
-            Like.objects.filter(avaliacoes=db).update(estado='Like')
-            utilidade = int(db.util) - 1
+            Like.objects.filter(user=user,avaliacoes=db).update(estado='Like')
+            print(db.util,"dislike")
+            soma = int(db.util)
+            utilidade = soma - 1
+            print(utilidade)
+            Avaliacoes.objects.filter(pk=pk).update(util=utilidade)
             db.liked.remove(user)
     else:
         b2 = Like(user=user,avaliacoes=db,estado='Dislike')
         b2.save()
-        utilidade = 1 + int(db.util)
+        print(db.util,"novo")
+        soma = int(db.util)
+        utilidade = 1 + soma
+        print(utilidade)
+        Avaliacoes.objects.filter(pk=pk).update(util=utilidade)
         db.liked.add(user)
-    print(db.liked.all())
-    Avaliacoes.objects.filter(pk=pk).update(util=utilidade)
+        
     pk_str = str(db.game_id)
     rota = "/avaliar/" + pk_str
     return redirect(rota)
