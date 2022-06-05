@@ -1,6 +1,6 @@
 from django.urls import path
 
-from.views import buscagameAdmin, index,games,form_game,create,view,edit,update,delete,avaliar_form,avaliar,deleteaval,gamesadmin,buscagame,buscagameAdmin
+from.views import buscagameAdmin, index,games,form_game,create, mais_util,view,edit,update,delete,avaliar_form,avaliar,deleteaval,gamesadmin,buscagame,buscagameAdmin,marcaUtil,mais_util
 
 urlpatterns = [
     path('', index, name='index'),
@@ -17,4 +17,6 @@ urlpatterns = [
     path('avaliar/<int:pk>/', avaliar_form, name='avaliar_form'),
     path('createaval/<int:pk>/', avaliar, name='createaval'),
     path('deleteaval/<int:pk>/', deleteaval, name='deleteaval'),
+    path('marcautil/<int:pk>/',marcaUtil, name='marcautil'),
+    path('maisutil/<int:pk>/',mais_util, name='mais_util'),
 ]

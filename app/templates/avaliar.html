@@ -64,13 +64,13 @@
                         placeholder="game_id" name="game_id" value="{{db.id}}">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="autor" aria-describedby="autor"
-                        placeholder="Autor" name="autor">
+                        <input type="hidden" class="form-control" id="autor" aria-describedby="autor"
+                        placeholder="Autor" name="autor" value="{{us}}">
                     </div>
                     <div class="mb-3">
                         <textarea type="text" class="form-control" id="comentario" placeholder="Comentário" name="comentario" rows="3"></textarea>
                     </div>
-                    <div class="mb-3 col-2">
+                    <div class="mb-3 col-3">
                         <input type="number" min="0" max="5" class="form-control" id="nota" placeholder="Nota (1 a 5)" name="nota">
                     </div>
                     <input type="submit" class="btn btn-success btnSucess" value="Avaliar">
@@ -84,9 +84,23 @@
             <a href="/games" class="btn btn-info"> Voltar</a>
         </div>
 
-        <br>
+
+
         <div class="col-8 m-auto pt-2 pb-2 text-center">
             <h2> Avaliações de {{db.nome}}</h2>
+        </div>
+
+        <div class="col-8 m-auto pt-1 pb-1 text-center"> 
+            <table class="table">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a href="/maisutil/{{db.id}}" class="btn btn-primary">Mais Úteis</a>
+                      <a href="/avaliar/{{db.id}}/" class="btn btn-success">Mais Recentes</a>
+                    </td>
+                  </tr> 
+                </tbody>
+              </table>
         </div>
     
         <tbody>
@@ -96,7 +110,26 @@
                     <p><b>Autor:</b> {{avs.autor}}</p>
                     <p><b>Comentário:</b> {{avs.comentario}}</p>
                     <p><b>Nota:</b> {{avs.nota}}\5</p>
-                    <a href="/deleteaval/{{avs.id}}/" class="btn btn-danger btnDel" >Remover</a>
+                    <p><b>Utilidade:</b> {{avs.util}}</p>
+                    <div class="col-8 m-auto pt-1 pb-1 text-center"> 
+                        <table class="table">
+                            <tbody>
+                              <tr>
+                                <td>
+                                {% if avs.autor == us %}
+                                  <a href="/deleteaval/{{avs.id}}/" class="btn btn-danger btnDel" >Remover</a>
+                                {%else%}
+                                  {%if user not in avs.liked.all%}
+                                    <a href="/marcautil/{{avs.id}}/" class="btn btn-success">Marcar como util</a>
+                                  {%else%}
+                                    <a href="/marcautil/{{avs.id}}/" class="btn btn-danger">Desmarcar como util</a>
+                                  {%endif%}
+                                {%endif%}
+                              </tr> 
+                            </tbody>
+                          </table>
+                    </div>
+                   
                 </div>
             </div>
             {% endfor %}
